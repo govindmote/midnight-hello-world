@@ -186,3 +186,19 @@ compiler to that version:
 compact update <version>
 compact use <version>
 ```
+
+## Architecture: Public State vs Private Witness
+
+In Compact, circuit inputs are private by default. Calling `disclose()` on a value doesn't publish it — it tells the compiler the developer considers that value safe to expose. Data only actually becomes public when it crosses one of three boundaries: a write to public ledger state, a return value from an exported contract function, or a contract-to-contract call.
+
+In this contract, the `storeMessage` circuit currently accepts a message as input. As this evolves toward the full VerifyIt concept, the submitted claim/tip will be held as a private witness — unreadable on-chain — and will only be written to public ledger state (via `disclose()`) once a verification threshold is met. The identity of the submitter is never disclosed; only the verified claim content becomes public.
+
+## Product Idea
+
+VerifyIt on Midnight is a privacy-preserving fact-checking and tip submission network. Unlike traditional fact-checking platforms where sources are exposed the moment they submit a claim, this app lets whistleblowers and everyday users submit tips or claims as private witnesses — visible to no one, not even the platform, until they choose to disclose. A claim only crosses into public ledger state once it passes a verification threshold, at which point the claim itself — not the identity of the submitter — becomes public. This protects sources from retaliation while still producing a transparent, auditable public record of verified claims.
+
+## Deployment
+
+- Network: Preview
+- Contract address: `0aeadcee9b225226288c4a037bd4180b392cfc589bb6e35c000992735debe5a0`
+
